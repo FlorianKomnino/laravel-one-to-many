@@ -22,7 +22,26 @@
                     </div>
                     @enderror
                 </div>
-                
+
+                <div class="mb-3">
+                    <label for="projectType" class="form-label">Project Title</label>
+
+                    <input type="text" class="form-control @error('title') is-invalid @enderror" id="projectType" name="type">
+
+                    <select name="" id="">
+                    @foreach ($types as $projectType)
+                        <option value="{{$projectType->id}}" >{{$projectType->name()}}</option>
+                    @endforeach
+
+                    </select>
+
+                    @error('title')
+                    <div class="errors_container mb-4 alert alert-warning">
+                        <div id="popup_message" data-type="warning" data-message="Check errors">{{$message}}</div>
+                    </div>
+                    @enderror
+                </div>
+
                 <div class="mb-3">
                     <label for="projectContent" class="form-label">Content</label>
                     <textarea class="w-100 @error('content') border-danger @enderror" id="projectContent" name="content" maxlength="500" rows="8">{{old('content',$project->content)}}</textarea>

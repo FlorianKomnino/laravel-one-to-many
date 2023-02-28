@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Project as Project;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
@@ -61,7 +62,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.create', ['project' => new Project()]);
+        return view('admin.projects.create', ['project' => new Project(), 'types' => Type::all()]);
     }
 
     /**
@@ -105,7 +106,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.edit', compact('project'));
+        return view('admin.projects.edit', ['project' => $project, 'types' => Type::all()]);
     }
 
     /**
