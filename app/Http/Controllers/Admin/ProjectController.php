@@ -22,18 +22,22 @@ class ProjectController extends Controller
     ];
 
     protected $validationErrorMessages = [
-        'title.required' => 'Il titolo è richiesto.',
+        'title.required' => 'Il titolo è necessario.',
         'title.unique' => 'Il titolo non può essere uguale ad un altro titolo in archivio.',
         'title.min' => 'Il titolo deve essere lungo almeno 2 caratteri.',
         'title.max' => 'Il titolo non può superare i 255 caratteri.',
 
-        'content.required' => 'Il contenuto è richiesto.',
+        'content.required' => 'Il contenuto è necessario.',
         'content.min' => 'Il contenuto deve essere lungo almeno 2 caratteri.',
         'content.max' => 'Il contenuto non può superare i 500 caratteri.',
 
-        'topic.required' => 'L\'argomento è richiesto.',
+        'topic.required' => 'L\'argomento è necessario.',
         'topic.image' => 'L\'argomento deve essere lungo almeno 2 caratteri.',
         'topic.max' => 'L\'argomento non può superare i 100 caratteri.',
+
+        'image.required' => 'L\'immagine è necessaria.',
+        'image.image' => 'Il file caricato deve essere un\'immagine.',
+        'image.max' => 'L\'immagine è troppo grande. (max: 256kb)',
     ];
 
     /**
@@ -68,32 +72,9 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate(
-            [
-                'title' => 'required|unique:projects|string|min:2|max:255',
-                'content' => 'required|string|min:2|max:500',
-                'topic' => 'required|string|min:2|max:100',
-                'image' => 'required|image|max:256'
-            ],
-            [
-                'title.required' => 'Il titolo è necessario.',
-                'title.unique' => 'Il titolo non può essere uguale ad un altro titolo in archivio.',
-                'title.min' => 'Il titolo deve essere lungo almeno 2 caratteri.',
-                'title.max' => 'Il titolo non può superare i 255 caratteri.',
-
-                'content.required' => 'Il contenuto è necessario.',
-                'content.min' => 'Il contenuto deve essere lungo almeno 2 caratteri.',
-                'content.max' => 'Il contenuto non può superare i 500 caratteri.',
-
-                'topic.required' => 'L\'argomento è necessario.',
-                'topic.image' => 'L\'argomento deve essere lungo almeno 2 caratteri.',
-                'topic.max' => 'L\'argomento non può superare i 100 caratteri.',
-
-                'image.required' => 'L\'immagine è necessaria.',
-                'image.image' => 'Il file caricato deve essere un\'immagine.',
-                'image.max' => 'L\'immagine è troppo grande. (max: 256kb)',
-            ]
-        );
+        $rules = $this->validationRules;
+        $errorMessages = $this->validationErrorMessages;
+        $data = $request->validate($rules, $errorMessages);
 
         $data['image'] =  Storage::put('imgs/', $data['image']);
 
@@ -136,25 +117,11 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        $data = $request->validate([
-            'title' => ['required', Rule::unique('projects')->ignore($project->id)],
-            'content' => 'required|string|min:2|max:500',
-            'topic' => 'required|string|min:2|max:100',
-            'image' => 'required|image|max:256'
-        ], [
-            'title.required' => 'Il titolo è richiesto.',
-            'title.unique' => 'Il titolo non può essere uguale ad un altro titolo in archivio.',
-            'title.min' => 'Il titolo deve essere lungo almeno 2 caratteri.',
-            'title.max' => 'Il titolo non può superare i 255 caratteri.',
+        $rules = $this->validationRules;
+        $rules['title'] = ['required', Rule::unique('projects')->ignore($project->id)];
+        $errorMessages = $this->validationErrorMessages;
+        $data = $request->validate($rules, $errorMessages);
 
-            'content.required' => 'Il contenuto è richiesto.',
-            'content.min' => 'Il contenuto deve essere lungo almeno 2 caratteri.',
-            'content.max' => 'Il contenuto non può superare i 500 caratteri.',
-
-            'topic.required' => 'L\'argomento è richiesto.',
-            'topic.image' => 'L\'argomento deve essere lungo almeno 2 caratteri.',
-            'topic.max' => 'L\'argomento non può superare i 100 caratteri.',
-        ]);
         $data['image'] = Storage::put('/imgs', $data['image']);
 
         $project->title = $data['title'];
