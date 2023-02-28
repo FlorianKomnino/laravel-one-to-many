@@ -10,4 +10,9 @@ class Type extends Model
     use HasFactory;
 
     protected $fillables = ['name'];
+
+    public function projects()
+    {
+        return $this->hasMany(Projects::class);
+    }
 }
