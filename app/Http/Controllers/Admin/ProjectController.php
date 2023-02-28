@@ -57,7 +57,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.create');
+        return view('admin.projects.create', ['project' => new Project()]);
     }
 
     /**
@@ -95,9 +95,6 @@ class ProjectController extends Controller
             ]
         );
 
-        // if ($request->hasFile('image')) {
-        //     $data['image'] =  Storage::put('imgs/', $data['image']);
-        // }
         $data['image'] =  Storage::put('imgs/', $data['image']);
 
         $newProject = new Project;
