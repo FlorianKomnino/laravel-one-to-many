@@ -19,7 +19,8 @@ class ProjectController extends Controller
         'title' => 'required|unique:projects|string|min:2|max:255',
         'content' => 'required|string|min:2|max:500',
         'topic' => 'required|string|min:2|max:100',
-        'image' => 'required|image|max:256'
+        'image' => 'required|image|max:256',
+        'type_id' => 'required'
     ];
 
     protected $validationErrorMessages = [
@@ -76,7 +77,6 @@ class ProjectController extends Controller
         $rules = $this->validationRules;
         $errorMessages = $this->validationErrorMessages;
         $data = $request->validate($rules, $errorMessages);
-
         $data['image'] =  Storage::put('imgs/', $data['image']);
 
         $newProject = new Project;

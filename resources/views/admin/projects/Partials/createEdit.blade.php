@@ -26,16 +26,13 @@
                 <div class="mb-3">
                     <label for="projectType" class="form-label">Project Title</label>
 
-                    <input type="text" class="form-control @error('title') is-invalid @enderror" id="projectType" name="type">
-
-                    <select name="" id="">
+                    <select class="form-control @error('type_id') is-invalid @enderror" name="type_id" id="projectType">
                     @foreach ($types as $projectType)
                         <option value="{{$projectType->id}}" >{{$projectType->name}}</option>
                     @endforeach
-
                     </select>
 
-                    @error('title')
+                    @error('type_id')
                     <div class="errors_container mb-4 alert alert-warning">
                         <div id="popup_message" data-type="warning" data-message="Check errors">{{$message}}</div>
                     </div>

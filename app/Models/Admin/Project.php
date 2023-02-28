@@ -13,7 +13,7 @@ class Project extends Model
 
     use SoftDeletes;
 
-    protected $fillable = array('title', 'type', 'content', 'topic', 'image');
+    protected $fillable = array('title', 'type_id', 'content', 'topic', 'image');
 
     public function type()
     {
