@@ -30,7 +30,7 @@
 
                     <select name="" id="">
                     @foreach ($types as $projectType)
-                        <option value="{{$projectType->id}}" >{{$projectType->name()}}</option>
+                        <option value="{{$projectType->id}}" >{{$projectType->name}}</option>
                     @endforeach
 
                     </select>
