@@ -18,11 +18,10 @@ class ProjectsTableSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        $type = Type::all();
         for ($i = 0; $i < 50; $i++) {
             $newProject = new Project();
-            $newProject->type_id =
-                $newProject->author = $faker->word();
+            $newProject->type_id = Type::inRandomOrder()->first()->id;
+            $newProject->author = $faker->word();
             $newProject->title = $faker->sentence(5);
             $newProject->content = $faker->text(500);
             $newProject->topic = $faker->sentence(3);
