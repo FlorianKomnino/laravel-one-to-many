@@ -20,6 +20,7 @@
                 <thead>
                     <tr>
                         <th scope="col">id</th>
+                        <th scope="col">type</th>
                         <th scope="col">title</th>
                         <th scope="col">author</th>
                         <th scope="col">content</th>
@@ -32,6 +33,7 @@
                     @foreach ($projects as $project)
                         <tr>
                             <th scope="row">{{ $project->id }}</th>
+                            <td>{{ $project->type->name }}</td>
                             <td>{{ $project->title }}</td>
                             <td>{{ $project->author }}</td>
                             <td>{{ $project->content }}</td>
