@@ -20,7 +20,7 @@ class ProjectController extends Controller
         'content' => 'required|string|min:2|max:500',
         'topic' => 'required|string|min:2|max:100',
         'image' => 'required|image|max:256',
-        'type_id' => 'required'
+        'type_id' => 'required|exists:types,id'
     ];
 
     protected $validationErrorMessages = [
